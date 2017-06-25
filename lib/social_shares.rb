@@ -116,13 +116,9 @@ module SocialShares
     end
 
     def selected_base(url, selected_networks, with_exception)
-      lambdas = filtered_networks(selected_networks).map do |network_name|
+      filtered_networks(selected_networks).reduce({}) do |result, network_name|
         method_name = with_exception ? "#{network_name}!" : network_name
-        -> {{network_name => self.send(method_name, url)}}
-      end
-      thread_pool(lambdas).reduce({}) do |result, thread|
-        thread.join
-        result.merge(thread.value)
+        result.merge(network_name => self.send(method_name, url))
       end
     end
   end
