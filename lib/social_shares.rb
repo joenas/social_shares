@@ -82,6 +82,10 @@ module SocialShares
     end
 
     def total(url, selected_networks = SUPPORTED_NETWORKS)
+      selected(url, selected_networks).values.map(&:to_i).reduce(:+)
+    end
+
+    def total!(url, selected_networks = SUPPORTED_NETWORKS)
       selected!(url, selected_networks).values.reduce(:+)
     end
 
