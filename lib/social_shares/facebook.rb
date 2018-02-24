@@ -1,6 +1,6 @@
 module SocialShares
   class Facebook < Base
-    URL = 'http://graph.facebook.com/v2.7/'
+    URL = ENV['SOCIAL_SHARES_FACEBOOK_URL'] || 'http://graph.facebook.com/v2.7/'
 
     def shares!
       response = get(URL, params: {
